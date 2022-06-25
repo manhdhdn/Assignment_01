@@ -47,6 +47,42 @@ namespace DataAccess.DataAccess
             return false;
         }
 
+        public IEnumerable<MemberObject> GetMembers()
+        {
+            IDataReader dataReader = null!;
+            string SQLSelect = "SELECT MemberID, MemberName, Email, Password, City, Country FROM Members";
+            var members = new List<MemberObject>();
+
+            try
+            {
+                dataReader = DataProvider.GetDataReader(SQLSelect, CommandType.Text, out connection);
+
+                while (dataReader.Read())
+                {
+                    members.Add(new MemberObject()
+                    {
+                        MemberID = dataReader.GetInt32(0),
+                        MemberName = dataReader.GetString(1),
+                        Email = dataReader.GetString(2),
+                        Password = dataReader.GetString(3),
+                        City = dataReader.GetString(4),
+                        Country = dataReader.GetString(5)
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                dataReader.Close();
+                CloseConnection();
+            }
+
+            return members;
+        }
+
         public MemberObject GetMember(int memberID, string? email, string? password)
         {
             MemberObject member = null!;
@@ -124,6 +160,68 @@ namespace DataAccess.DataAccess
             catch (Exception ex)
             {
 
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                CloseConnection();
+            }
+        }
+        public void Update(MemberObject member)
+        {
+            try
+            {
+                MemberObject pro = GetMember(member.MemberID, null, null);
+
+                if (pro != null)
+                {
+                    string SQLInsert = "UPDATE Members SET MemberName = @MemberName, Email = @Email, Password = @Password, City = @City, Country = @Country where MemberID = @MemberID";
+                    var parameters = new List<SqlParameter>
+                    {
+                        StockDataProvider.CreatePrameter("@MemberID", 4, member.MemberID, DbType.Int32),
+                        StockDataProvider.CreatePrameter("@MemberName", 50, member.MemberName, DbType.String),
+                        StockDataProvider.CreatePrameter("@Email", 50, member.Email, DbType.String),
+                        StockDataProvider.CreatePrameter("@Password", 20, member.Password, DbType.String),
+                        StockDataProvider.CreatePrameter("@City", 30, member.City, DbType.String),
+                        StockDataProvider.CreatePrameter("@Country", 30, member.Country, DbType.String)
+                    };
+                    DataProvider.Insert(SQLInsert, CommandType.Text, parameters.ToArray());
+                }
+                else
+                {
+                    throw new Exception("The member does not exist.");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                CloseConnection();
+            }
+        }
+        public void Remove(int memberID)
+        {
+            try
+            {
+                MemberObject member = GetMember(memberID, null, null);
+
+                if (member != null)
+                {
+                    string SQLDelete = "DELETE Members where MemberID = @MemberID";
+                    var param = StockDataProvider.CreatePrameter("@MemberID", 4, memberID, DbType.Int32);
+                    DataProvider.Delete(SQLDelete, CommandType.Text, param);
+                }
+                else
+                {
+                    throw new Exception("The member does not exist.");
+                }
+
+            }
+            catch (Exception ex)
+            {
                 throw new Exception(ex.Message);
             }
             finally

@@ -13,9 +13,9 @@ namespace BusinessObject
         public string Email { get; set; } = null!;
         [Range(6, 20)]
         public string Password { get; set; } = null!;
-        [Range(0, 50)]
+        [Range(0, 30)]
         public string City { get; set; } = null!;
-        [Range(0, 50)]
+        [Range(0, 30)]
         public string Country { get; set; } = null!;    
     }
 }
