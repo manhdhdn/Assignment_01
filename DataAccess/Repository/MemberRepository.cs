@@ -7,23 +7,15 @@ namespace DataAccess.Repository
     {
         public bool Login(string username, string password) => MemberDBContext.Login(username, password);
 
-        public IEnumerable<MemberObject> GetMembers()
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<MemberObject> GetMembers() => MemberDBContext.Instance.GetMembers();   
 
         public MemberObject GetMember(int memberID, string? email, string? password) => MemberDBContext.Instance.GetMember(memberID, email, password);
 
         public void InsertMember(MemberObject member) => MemberDBContext.Instance.AddNew(member);
 
-        public void UpdateMember(MemberObject member)
-        {
-            throw new NotImplementedException();
-        }
+        public void UpdateMember(MemberObject member) => MemberDBContext.Instance.Update(member);          
 
-        public void DeleteMember(int memberID)
-        {
-            throw new NotImplementedException();
-        }
+        public void DeleteMember(int memberID) => MemberDBContext.Instance.Remove(memberID);
+        
     }
 }

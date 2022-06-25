@@ -82,5 +82,53 @@ namespace DataAccess.DataAccess
                 throw new Exception(ex.Message);
             }
         }
+        public void Update(string commandText, CommandType commandType, params SqlParameter[] parameters)
+        {
+            try
+            {
+                using var connection = new SqlConnection(ConnectionString);
+                connection.Open();
+                using var command = new SqlCommand(commandText, connection);
+                command.CommandType = commandType;
+
+                if (parameters != null)
+                {
+                    foreach (var parameter in parameters)
+                    {
+                        command.Parameters.Add(parameter);
+                    }
+                }
+
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public void Delete(string commandText, CommandType commandType, params SqlParameter[] parameters)
+        {
+            try
+            {
+                using var connection = new SqlConnection(ConnectionString);
+                connection.Open();
+                using var command = new SqlCommand(commandText, connection);
+                command.CommandType = commandType;
+
+                if (parameters != null)
+                {
+                    foreach (var parameter in parameters)
+                    {
+                        command.Parameters.Add(parameter);
+                    }
+                }
+
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Data Provider: Delete method", ex.InnerException);
+            }
+        }
     }
 }
