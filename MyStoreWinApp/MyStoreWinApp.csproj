@@ -14,4 +14,16 @@
     </ProjectReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="frmMemberManagement.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
