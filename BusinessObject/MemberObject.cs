@@ -10,6 +10,7 @@ namespace BusinessObject
         [Range(0, 50)]
         public string MemberName { get; set; } = null!;
         [EmailAddress]
+        [Range(0, 50)]
         public string Email { get; set; } = null!;
         [Range(6, 20)]
         public string Password { get; set; } = null!;
