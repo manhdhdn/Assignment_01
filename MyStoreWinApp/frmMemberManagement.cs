@@ -7,7 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using DataAccess.DataAccess;
+using DataAccess.Repository;
+using BusinessObject;
 namespace MyStoreWinApp
 {
     public partial class frmMemberManagement : Form
@@ -16,5 +18,11 @@ namespace MyStoreWinApp
         {
             InitializeComponent();
         }
+        public IMemberRepository? MemberRepository { get; set; }
+
+        public bool AdminOrMember { get; set; }
+
+        public MemberObject? MemberInfo { get; set; }
+        
     }
 }

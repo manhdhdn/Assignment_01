@@ -9,11 +9,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Business Layer", "2. Bus
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Data Layer", "3. Data Layer", "{52E840C3-96E9-4C65-94C8-B2A023463A62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{1671DC0D-684A-4DBF-8B4D-1B263CC0D055}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{1671DC0D-684A-4DBF-8B4D-1B263CC0D055}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessObject", "BusinessObject\BusinessObject.csproj", "{4FC61F27-6A9A-4357-8B6F-716EB4031B0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessObject", "BusinessObject\BusinessObject.csproj", "{4FC61F27-6A9A-4357-8B6F-716EB4031B0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyStoreWinApp", "MyStoreWinApp\MyStoreWinApp.csproj", "{30DD3A37-6F70-4527-B03A-AA6FA49585DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyStoreWinApp", "MyStoreWinApp\MyStoreWinApp.csproj", "{30DD3A37-6F70-4527-B03A-AA6FA49585DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
