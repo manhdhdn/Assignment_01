@@ -31,8 +31,8 @@
             this.lbEmail = new System.Windows.Forms.Label();
             this.lbPassword = new System.Windows.Forms.Label();
             this.txtEmail = new System.Windows.Forms.TextBox();
-            this.bntLogin = new System.Windows.Forms.Button();
             this.txtPassword = new System.Windows.Forms.TextBox();
+            this.btnLogin = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lbEmail
@@ -55,21 +55,10 @@
             // 
             // txtEmail
             // 
-            this.txtEmail.Location = new System.Drawing.Point(199, 86);
+            this.txtEmail.Location = new System.Drawing.Point(199, 79);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(172, 27);
             this.txtEmail.TabIndex = 2;
-            // 
-            // bntLogin
-            // 
-            this.bntLogin.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.bntLogin.Location = new System.Drawing.Point(199, 212);
-            this.bntLogin.Name = "bntLogin";
-            this.bntLogin.Size = new System.Drawing.Size(94, 29);
-            this.bntLogin.TabIndex = 4;
-            this.bntLogin.Text = "Login";
-            this.bntLogin.UseVisualStyleBackColor = true;
-            this.bntLogin.Click += new System.EventHandler(this.bntLogin_Click);
             // 
             // txtPassword
             // 
@@ -77,15 +66,24 @@
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(172, 27);
             this.txtPassword.TabIndex = 5;
-            this.txtPassword.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // btnLogin
+            // 
+            this.btnLogin.Location = new System.Drawing.Point(199, 211);
+            this.btnLogin.Name = "btnLogin";
+            this.btnLogin.Size = new System.Drawing.Size(94, 29);
+            this.btnLogin.TabIndex = 6;
+            this.btnLogin.Text = "Login";
+            this.btnLogin.UseVisualStyleBackColor = true;
+            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
             // frmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(472, 363);
+            this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.txtPassword);
-            this.Controls.Add(this.bntLogin);
             this.Controls.Add(this.txtEmail);
             this.Controls.Add(this.lbPassword);
             this.Controls.Add(this.lbEmail);
@@ -93,7 +91,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmLogin";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmLogin_FormClosed);
-            this.Load += new System.EventHandler(this.frmLogin_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -104,7 +101,7 @@
         private Label lbEmail;
         private Label lbPassword;
         private TextBox txtEmail;
-        private Button bntLogin;
         private TextBox txtPassword;
+        private Button btnLogin;
     }
 }

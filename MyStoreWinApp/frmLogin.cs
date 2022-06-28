@@ -11,7 +11,11 @@ public partial class frmLogin : Form
         InitializeComponent();
     }
      
-    private void bntLogin_Click(object sender, EventArgs e)
+
+
+    private void frmLogin_FormClosed(object sender, FormClosedEventArgs e) => Close();
+
+    private void btnLogin_Click(object sender, EventArgs e)
     {
         if (MemberRepository.Login(txtEmail.Text, txtPassword.Text))
         {
@@ -19,21 +23,22 @@ public partial class frmLogin : Form
             {
                 Text = "Member Management",
                 MemberRepository = MemberRepository,
-                AdminOrMember = true,
-                MemberInfo = MemberRepository.GetMember(0, txtEmail.Text, txtPassword.Text)
+                AdminOrMember = true
             };
             frmMemberManagement.ShowDialog();
         }
         else
         {
-            if (MemberRepository.GetMember(0, txtEmail.Text, txtPassword.Text) != null)
+            var memberInfo = MemberRepository.GetMember(0, txtEmail.Text, txtPassword.Text);
+
+            if (memberInfo != null)
             {
                 frmMemberManagement frmMemberManagement = new frmMemberManagement
                 {
                     Text = "Member Infomation",
                     MemberRepository = MemberRepository,
                     AdminOrMember = false,
-                    MemberInfo = MemberRepository.GetMember(0, txtEmail.Text, txtPassword.Text)
+                    MemberInfo = memberInfo
                 };
                 frmMemberManagement.ShowDialog();
             }
@@ -42,19 +47,5 @@ public partial class frmLogin : Form
                 MessageBox.Show("Incorrect Email or Password");
             }
         }
-    }
-   
-
-    private void bntClose_Click(object sender, EventArgs e) => Close();
-
-    private void frmLogin_FormClosed(object sender, FormClosedEventArgs e) => Close();
-
-    private void frmLogin_Load(object sender, EventArgs e)
-    {
-
-    }
-    private void txtPassword_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
-    {
-
     }
 }
