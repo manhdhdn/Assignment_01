@@ -22,8 +22,8 @@ public partial class frmLogin : Form
             frmMemberManagement frmMemberManagement = new frmMemberManagement
             {
                 Text = "Member Management",
-                MemberRepository = MemberRepository,
-                InsertOrUpdate = true
+                MemberRepository = MemberRepository
+                
             };
             frmMemberManagement.ShowDialog();
         }
@@ -38,7 +38,7 @@ public partial class frmLogin : Form
                     Text = memberInfo.MemberName + " details",
                     MemberRepository = MemberRepository,
                     MemberInfo = memberInfo,
-                    InsertOrUpdate = false
+                    InsertOrUpdate = true
                 };
                 frmMemberDetails.ShowDialog();
             }
