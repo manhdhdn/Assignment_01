@@ -23,7 +23,7 @@ public partial class frmLogin : Form
             {
                 Text = "Member Management",
                 MemberRepository = MemberRepository,
-                AdminOrMember = true
+                InsertOrUpdate = true
             };
             frmMemberManagement.ShowDialog();
         }
@@ -33,14 +33,14 @@ public partial class frmLogin : Form
 
             if (memberInfo != null)
             {
-                frmMemberManagement frmMemberManagement = new frmMemberManagement
+                frmMemberDetails frmMemberDetails = new frmMemberDetails
                 {
-                    Text = "Member Infomation",
+                    Text = memberInfo.MemberName + " details",
                     MemberRepository = MemberRepository,
-                    AdminOrMember = false,
-                    MemberInfo = memberInfo
+                    MemberInfo = memberInfo,
+                    InsertOrUpdate = false
                 };
-                frmMemberManagement.ShowDialog();
+                frmMemberDetails.ShowDialog();
             }
             else
             {

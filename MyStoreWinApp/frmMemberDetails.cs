@@ -14,15 +14,14 @@ namespace MyStoreWinApp
 {
     public partial class frmMemberDetails : Form
     {
+        public IMemberRepository? MemberRepository { get; set; }
         public frmMemberDetails()
         {
             InitializeComponent();
         }
-
-        
-        public IMemberRepository MemberRepository { get; set; }
+            
         public bool InsertOrUpdate { get; set; }
-        public MemberObject MemberInfo { get; set; }
+        public MemberObject? MemberInfo { get; set; }
 
         private void frmMemberDetails_Load(object sender, EventArgs e)
         {
