@@ -47,15 +47,40 @@ namespace DataAccess.DataAccess
             return false;
         }
 
-        public IEnumerable<MemberObject> GetMembers()
+        public IEnumerable<MemberObject> GetMembers(string? memberName, string? country, string? city)
         {
             IDataReader dataReader = null!;
-            string SQLSelect = "SELECT MemberID, MemberName, Email, Password, City, Country FROM Members";
+            string SQLSelect = null!;
             var members = new List<MemberObject>();
+            var parameters = new List<SqlParameter>();
 
             try
             {
-                dataReader = DataProvider.GetDataReader(SQLSelect, CommandType.Text, out connection);
+                if (memberName == null && country == null && city == null)
+                {
+                    SQLSelect = "SELECT MemberID, MemberName, Email, Password, City, Country FROM Members ";
+                }
+
+                if (memberName != null)
+                {
+                    SQLSelect = "SELECT MemberID, MemberName, Email, Password, City, Country FROM Members WHERE MemberName LIKE N'%@MemberName%' ";
+                    parameters.Add(StockDataProvider.CreatePrameter("@MemberName", 50, memberName, DbType.String));
+                }
+
+                if (country != null)
+                {
+                    SQLSelect = "SELECT MemberID, MemberName, Email, Password, City, Country FROM Members WHERE Country = @Country ";
+                    parameters.Add(StockDataProvider.CreatePrameter("@Country", 30, country, DbType.String));
+                }
+
+                if (city != null)
+                {
+                    SQLSelect = "SELECT MemberID, MemberName, Email, Password, City, Country FROM Members WHERE City = @City ";
+                    parameters.Add(StockDataProvider.CreatePrameter("@City", 30, city, DbType.String));
+                }
+
+
+                dataReader = DataProvider.GetDataReader(SQLSelect, CommandType.Text, out connection, parameters.ToArray());
 
                 while (dataReader.Read())
                 {
@@ -80,7 +105,7 @@ namespace DataAccess.DataAccess
                 CloseConnection();
             }
 
-            return members;
+            return members.OrderByDescending(m => m.MemberName);
         }
 
         public MemberObject GetMember(int memberID, string? email, string? password)

@@ -12,6 +12,12 @@
     <ProjectReference Include="..\DataAccess\DataAccess.csproj">
       <TreatAsUsed>true</TreatAsUsed>
     </ProjectReference>
+    <Compile Update="frmMemberManagement.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Compile>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
