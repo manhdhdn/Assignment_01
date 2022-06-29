@@ -63,8 +63,8 @@ namespace DataAccess.DataAccess
 
                 if (memberName != null)
                 {
-                    SQLSelect = "SELECT MemberID, MemberName, Email, Password, City, Country FROM Members WHERE MemberName LIKE N'%@MemberName%' ";
-                    parameters.Add(StockDataProvider.CreatePrameter("@MemberName", 50, memberName, DbType.String));
+                    SQLSelect = "SELECT MemberID, MemberName, Email, Password, City, Country FROM Members WHERE MemberName LIKE @MemberName ";
+                    parameters.Add(StockDataProvider.CreatePrameter("@MemberName", 50, '%' + memberName + '%', DbType.String));
                 }
 
                 if (country != null)

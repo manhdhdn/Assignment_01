@@ -23,10 +23,9 @@ namespace MyStoreWinApp
         public bool InsertOrUpdate { get; set; }
         public MemberObject? MemberInfo { get; set; }
 
-        private void frmMemberDetails_Load(object sender, EventArgs e)
+        private void FrmMemberDetails_Load(object sender, EventArgs e)
         {
-            cboCountry.SelectedIndex = 0;
-            cboCity.SelectedIndex = 0;
+            
             txtMemberID.Enabled = !InsertOrUpdate;
             if(InsertOrUpdate == true)
             {
@@ -38,12 +37,35 @@ namespace MyStoreWinApp
                 cboCity.Text = MemberInfo.City.Trim();
             }
         }
-        private void btnSave_Click(object sender, EventArgs e)
+        private void BtnSave_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                var member = new MemberObject
+                {
+                    MemberID = int.Parse(txtMemberID.Text),
+                    MemberName = txtMemberName.Text,
+                    Email = txtEmail.Text,
+                    Password = txtPassword.Text,
+                    Country = cboCountry.Text,
+                    City = cboCity.Text
+                };
+                if(InsertOrUpdate == false)
+                {
+                    MemberRepository.InsertMember(member);
+                }
+                else
+                {
+                    MemberRepository.UpdateMember(member);
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, InsertOrUpdate == false ? "Add new member" : "Update member profile");
+            }
         }
 
-        private void btnCancel_Click(object sender, EventArgs e) => Close();
+        private void BtnCancel_Click(object sender, EventArgs e) => Close();
 
         
     }
