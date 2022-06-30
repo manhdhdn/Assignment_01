@@ -135,7 +135,7 @@ namespace DataAccess.DataAccess
                 {
                     member = new MemberObject()
                     {
-                        MemberID = memberID,
+                        MemberID = dataReader.GetInt32(0),
                         MemberName = dataReader.GetString(1),
                         Email = dataReader.GetString(2),
                         Password = dataReader.GetString(3),
