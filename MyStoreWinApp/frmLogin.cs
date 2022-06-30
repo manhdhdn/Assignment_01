@@ -35,7 +35,7 @@ public partial class frmLogin : Form
             {
                 frmMemberDetails frmMemberDetails = new frmMemberDetails
                 {
-                    Text = memberInfo.MemberName + " details",
+                    Text = " Member Details",
                     MemberRepository = MemberRepository,
                     MemberInfo = memberInfo,
                     InsertOrUpdate = true
