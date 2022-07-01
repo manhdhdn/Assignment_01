@@ -117,53 +117,11 @@ namespace MyStoreWinApp
                 MessageBox.Show(ex.Message, "Load member list");
             }
         }
-        public void FilterByCountry()
+        public void Filter()
         {
-            var country = cboFilterCountry.Text;
-            var Filter = memberRepository.GetMembers(null, country, null);
-
             try
             {
-                source = new BindingSource { DataSource = Filter };
-
-                txtMemberID.DataBindings.Clear();
-                txtMemberName.DataBindings.Clear();
-                txtEmail.DataBindings.Clear();
-                txtPassword.DataBindings.Clear();
-                txtCountry.DataBindings.Clear();
-                txtCity.DataBindings.Clear();
-
-                txtMemberID.DataBindings.Add("Text", source, "MemberID");
-                txtMemberName.DataBindings.Add("Text", source, "MemberName");
-                txtEmail.DataBindings.Add("Text", source, "Email");
-                txtPassword.DataBindings.Add("Text", source, "Password");
-                txtCountry.DataBindings.Add("Text", source, "Country");
-                txtCity.DataBindings.Add("Text", source, "City");
-
-                dgvMemberList.DataSource = null;
-                dgvMemberList.DataSource = source;
-                if (!Filter.Any())
-                {
-                    btnDelete.Enabled = false;
-                }
-                else
-                {
-                    btnDelete.Enabled = true;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Filer member list");
-            }
-        }
-        public void FilterByCity()
-        {
-            var city = cboFilterCity.Text;
-            var Filter = memberRepository.GetMembers(null, null, city);
-
-            try
-            {
+                var Filter = memberRepository.GetMembers(null, cboFilterCountry.Text == "" ? null : cboFilterCountry.Text, cboFilterCity.Text == "" ? null : cboFilterCity.Text);
                 source = new BindingSource { DataSource = Filter };
 
                 txtMemberID.DataBindings.Clear();
@@ -200,9 +158,13 @@ namespace MyStoreWinApp
 
         public void SearchByID()
         {
-            var search = memberRepository.GetMember(int.Parse(txtSearch.Text), null, null);
             try
             {
+                var search = memberRepository.GetMember(int.Parse(txtSearch.Text), null, null);
+                if (search == null)
+                {
+                    throw new Exception("Not found.");
+                }
                 source = new BindingSource
                 {
                     DataSource = search
@@ -241,9 +203,9 @@ namespace MyStoreWinApp
 
         public void SearchByName()
         {
-            var search = memberRepository.GetMembers(txtSearch.Text, null, null);
             try
             {
+                var search = memberRepository.GetMembers(txtSearch.Text, null, null);
                 source = new BindingSource
                 {
                     DataSource = search
@@ -282,7 +244,7 @@ namespace MyStoreWinApp
         }
         private void BtnSearch_Click(object sender, EventArgs e)
         {
-            if(cboSearch.Text == "Member ID")
+            if (cboSearch.Text == "Member ID")
             {
                 SearchByID();
             }
@@ -294,14 +256,7 @@ namespace MyStoreWinApp
 
         private void BtnFilter_Click(object sender, EventArgs e)
         {
-            if(cboFilterCountry.Text != null)
-            {
-                FilterByCountry();
-            }
-            else if(cboFilterCity.Text != null)
-            {
-                FilterByCity();
-            }
+            Filter();
         }
 
         private void BtnAdd_Click(object sender, EventArgs e)
