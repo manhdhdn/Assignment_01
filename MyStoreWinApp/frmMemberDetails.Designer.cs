@@ -1,6 +1,6 @@
 ﻿namespace MyStoreWinApp
 {
-    partial class frmMemberDetails
+    partial class FrmMemberDetails
     {
         /// <summary>
         /// Required designer variable.
@@ -165,35 +165,26 @@
             this.cboCountry.FormattingEnabled = true;
             this.cboCountry.Items.AddRange(new object[] {
             "Vietnam",
-            "Thailan",
-            "Nhat"});
+            "Thailand",
+            "Japan",
+            "China"});
             this.cboCountry.Location = new System.Drawing.Point(149, 196);
             this.cboCountry.Name = "cboCountry";
             this.cboCountry.Size = new System.Drawing.Size(190, 23);
             this.cboCountry.TabIndex = 12;
+            this.cboCountry.SelectedIndexChanged += new System.EventHandler(this.CboCountry_SelectedIndexChanged);
             // 
             // cboCity
             // 
             this.cboCity.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.cboCity.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cboCity.FormattingEnabled = true;
-            this.cboCity.Items.AddRange(new object[] {
-            "HCM",
-            "Ha Noi",
-            "Nha Trang",
-            "Long Xuyen",
-            "Bangkok",
-            "Phuket",
-            "Chiang Mai",
-            "Tokyo",
-            "Hiroshima",
-            "Nagasaki"});
             this.cboCity.Location = new System.Drawing.Point(149, 241);
             this.cboCity.Name = "cboCity";
             this.cboCity.Size = new System.Drawing.Size(190, 23);
             this.cboCity.TabIndex = 13;
             // 
-            // frmMemberDetails
+            // FrmMemberDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -212,7 +203,7 @@
             this.Controls.Add(this.lbEmail);
             this.Controls.Add(this.lbMemberName);
             this.Controls.Add(this.lbMemberID);
-            this.Name = "frmMemberDetails";
+            this.Name = "FrmMemberDetails";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmMemberDetails";
             this.Load += new System.EventHandler(this.FrmMemberDetails_Load);

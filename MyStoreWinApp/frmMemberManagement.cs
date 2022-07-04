@@ -1,72 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-using DataAccess.DataAccess;
-using DataAccess.Repository;
+﻿using DataAccess.Repository;
 using BusinessObject;
-
-
-
 
 namespace MyStoreWinApp
 {
-    public partial class frmMemberManagement : Form
+    public partial class FrmMemberManagement : Form
     {
-        readonly IMemberRepository memberRepository = new MemberRepository();
+        public IMemberRepository MemberRepository { get; set; } = null!;
         BindingSource source = null!;
-        public frmMemberManagement()
+
+        public FrmMemberManagement()
         {
             InitializeComponent();
         }
-
-
-        public IMemberRepository? MemberRepository { get; set; }
-
-        public bool InsertOrUpdate { get; set; }
-
-        public MemberObject? MemberInfo { get; set; }
-        
-
-       //-------------------
-
 
         private void FrmMemberManagement_Load(object sender, EventArgs e)
         {
             cboSearch.SelectedIndex = 0;
             btnDelete.Enabled = false;
-            dgvMemberList.CellDoubleClick += DgvMemberList_CellDoubleClick;
         }
 
         private void DgvMemberList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            frmMemberDetails frmMemberDetails = new frmMemberDetails
+            FrmMemberDetails frmMemberDetails = new()
             {
                 Text = "Update member profile",
                 InsertOrUpdate = true,
                 MemberInfo = GetMemberObject(),
-                MemberRepository = memberRepository,
+                MemberRepository = MemberRepository,
             };
+
             if (frmMemberDetails.ShowDialog() == DialogResult.OK)
             {
                 LoadMemberList();
                 source.Position = source.Count - 1;
             }
-        }
-
-        private void Cleartext()
-        {
-            txtMemberID.Text = string.Empty;
-            txtMemberName.Text = string.Empty;
-            txtEmail.Text = string.Empty;
-            txtPassword.Text = string.Empty;
-            txtCountry.Text = string.Empty;
         }
 
         private MemberObject GetMemberObject()
@@ -88,17 +55,15 @@ namespace MyStoreWinApp
             {
                 MessageBox.Show(ex.Message, "Get member");
             }
+
             return memberObject;
         }
 
         public void LoadMemberList()
         {
-
-            var members = memberRepository.GetMembers(null,null,null);
-           
-
             try
             {
+                var members = MemberRepository.GetMembers(null, null, null);
                 source = new BindingSource
                 {
                     DataSource = members
@@ -134,12 +99,16 @@ namespace MyStoreWinApp
                 MessageBox.Show(ex.Message, "Load member list");
             }
         }
+
         public void Filter()
         {
             try
             {
-                var Filter = memberRepository.GetMembers(null, cboFilterCountry.Text == "" ? null : cboFilterCountry.Text, cboFilterCity.Text == "" ? null : cboFilterCity.Text);
-                source = new BindingSource { DataSource = Filter };
+                var Filter = MemberRepository.GetMembers(null, cboFilterCountry.Text == "" ? null : cboFilterCountry.Text, cboFilterCity.Text == "" ? null : cboFilterCity.Text);
+                source = new BindingSource
+                {
+                    DataSource = Filter
+                };
 
                 txtMemberID.DataBindings.Clear();
                 txtMemberName.DataBindings.Clear();
@@ -165,7 +134,6 @@ namespace MyStoreWinApp
                 {
                     btnDelete.Enabled = true;
                 }
-
             }
             catch (Exception ex)
             {
@@ -177,7 +145,7 @@ namespace MyStoreWinApp
         {
             try
             {
-                var search = memberRepository.GetMember(int.Parse(txtSearch.Text), null, null);
+                var search = MemberRepository.GetMember(int.Parse(txtSearch.Text), null, null);
                 if (search == null)
                 {
                     throw new Exception("Not found.");
@@ -222,7 +190,7 @@ namespace MyStoreWinApp
         {
             try
             {
-                var search = memberRepository.GetMembers(txtSearch.Text, null, null);
+                var search = MemberRepository.GetMembers(txtSearch.Text, null, null);
                 source = new BindingSource
                 {
                     DataSource = search
@@ -259,12 +227,14 @@ namespace MyStoreWinApp
                 MessageBox.Show(ex.Message, "Search member by Name");
             }
         }
+
         private void BtnSearch_Click(object sender, EventArgs e)
         {
             if (cboSearch.Text == "Member ID")
             {
                 SearchByID();
             }
+
             if (cboSearch.Text == "Member Name")
             {
                 SearchByName();
@@ -278,12 +248,13 @@ namespace MyStoreWinApp
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
-            frmMemberDetails frmMemberDetails = new frmMemberDetails
+            FrmMemberDetails frmMemberDetails = new()
             {
                 Text = "Add new member",
                 InsertOrUpdate = false,
-                MemberRepository = memberRepository
+                MemberRepository = MemberRepository
             };
+
             if (frmMemberDetails.ShowDialog() == DialogResult.OK)
             {
                 LoadMemberList();
@@ -296,7 +267,7 @@ namespace MyStoreWinApp
             try
             {
                 var member = GetMemberObject();
-                memberRepository.DeleteMember(member.MemberID);
+                MemberRepository.DeleteMember(member.MemberID);
                 LoadMemberList();
             }
             catch (Exception ex)
@@ -312,5 +283,52 @@ namespace MyStoreWinApp
             LoadMemberList();
         }
 
+        private void CboFilterCountry_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cboFilterCity.SelectedIndex = -1;
+
+            switch (cboFilterCountry.SelectedIndex)
+            {
+                case 0:
+                    cboFilterCity.Items.Clear();
+                    cboFilterCity.Items.AddRange(new object[]
+                    {
+                        "HCM",
+                        "Ha Noi",
+                        "Nha Trang",
+                        "Long Xuyen"
+                    });
+                    break;
+                case 1:
+                    cboFilterCity.Items.Clear();
+                    cboFilterCity.Items.AddRange(new object[]
+                    {
+                        "Bangkok",
+                        "Chiang Mai",
+                        "Phuket"
+                    });
+                    break;
+                case 2:
+                    cboFilterCity.Items.Clear();
+                    cboFilterCity.Items.AddRange(new object[]
+                    {
+                        "Tokyo",
+                        "Hiroshima",
+                        "Nagasaki"
+                    });
+                    break;
+                case 3:
+                    cboFilterCity.Items.Clear();
+                    cboFilterCity.Items.AddRange(new object[]
+                    {
+                        "Wuhan",
+                        "Beijing",
+                        "Changsha"
+                    });
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
