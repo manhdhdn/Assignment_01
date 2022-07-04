@@ -63,8 +63,8 @@ namespace DataAccess.DataAccess
 
                 if (memberName != null)
                 {
-                    SQLSelect = "SELECT MemberID, MemberName, Email, Password, City, Country FROM Members WHERE MemberName LIKE N'%@MemberName%' ";
-                    parameters.Add(StockDataProvider.CreatePrameter("@MemberName", 50, memberName, DbType.String));
+                    SQLSelect = "SELECT MemberID, MemberName, Email, Password, City, Country FROM Members WHERE MemberName LIKE @MemberName ";
+                    parameters.Add(StockDataProvider.CreatePrameter("@MemberName", 50, '%' + memberName + '%', DbType.String));
                 }
 
                 if (country != null)
@@ -79,9 +79,13 @@ namespace DataAccess.DataAccess
                     parameters.Add(StockDataProvider.CreatePrameter("@City", 30, city, DbType.String));
                 }
 
+                if (country != null && city != null)
+                {
+                    SQLSelect = "SELECT MemberID, MemberName, Email, Password, City, Country FROM Members WHERE Country = @Country AND City = @City ";
+                }
 
                 dataReader = DataProvider.GetDataReader(SQLSelect, CommandType.Text, out connection, parameters.ToArray());
-
+            
                 while (dataReader.Read())
                 {
                     members.Add(new MemberObject()
@@ -93,6 +97,11 @@ namespace DataAccess.DataAccess
                         City = dataReader.GetString(4),
                         Country = dataReader.GetString(5)
                     });
+                }
+
+                if (!members.Any())
+                {
+                    throw new Exception("Not found.");
                 }
             }
             catch (Exception ex)
@@ -142,7 +151,7 @@ namespace DataAccess.DataAccess
                         City = dataReader.GetString(4),
                         Country = dataReader.GetString(5)
                     };
-                }
+                }              
             }
             catch (Exception ex)
             {
@@ -184,7 +193,6 @@ namespace DataAccess.DataAccess
             }
             catch (Exception ex)
             {
-
                 throw new Exception(ex.Message);
             }
             finally
